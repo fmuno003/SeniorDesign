@@ -1,0 +1,47 @@
+Example boundaries of Parking Lot 24 located at UCR.
+
+Dimensions of Parking Lot
+Width (East to West): 230'
+Length (North to South): 525'
+
+-----------------------------------
+
+South East Corner
+Lat: 33.977261 Long: -117.330202
+
+South West Corner (Base Point)
+Lat: 33.977282 Long: -117.330928
+
+North West Corner
+Lat: 33.978701 Long: -117.330937
+
+North East Corner
+Lat: 33.978713 Long: -117.330247
+
+-----------------------------------
+
+Width coordinates are separated by 0.000726
+From this we can calculate that 0.0001 in Longitutde is equal to approximately 31.68ft.
+ 
+Length coordinates are separated by 0.001419
+From this we can calculate that 0.001 in Latitude is equal to approximately 369.98ft.
+
+
+
+If we treat base point as (0,0) and make the corners plotted points, the locations of these points are as follows.
+
+-----------------------------------
+
+South East Corner: (12,0)
+
+South West Corner: (0,0)
+
+North West Corner: (0,26)
+
+North East Corner: (12,26)
+
+-----------------------------------
+
+These points are located on a cartiesian plane where one unit is equal to 10 ft. (i.e 11.5  = 115 ft)
+
+

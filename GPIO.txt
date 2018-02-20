@@ -1,0 +1,37 @@
+# H-Bridge Pinout
+
+# Motor 1
+# enA - Pin 16
+# IN1 - Pin 18
+# IN2 - Pin 12
+
+# Motor 2
+# IN3 - Pin 11
+# IN4 - Pin 13
+# enB - Pin 15
+
+# Motor 3
+# enA - Pin 19
+# IN1 - Pin 21
+# IN2 - Pin 23
+
+# Motor 4
+# IN3 - Pin 22
+# IN4 - Pin 24
+# enB - Pin 26
+
+# Platform Stepper Motor
+
+# IN1 = 36
+# IN2 = 35
+# IN3 = 38
+# IN4 = 40
+
+# Arm Stepper Motor
+# Pin 33, 29, 31, 32
+
+# Vibration Sensor
+# Pin 37 (BCM 26)
+
+# Ground Pins
+6, 9, 14, 20, 25, 30, 34, 39
