@@ -1,8 +1,8 @@
 import math
 
-calculate = open("Coordinates.txt", "r")
+calculate = open("/home/pi/Desktop/Coordinates.txt", "r")
 number = open("/home/pi/Desktop/GUI/examples.txt", "r")
-angles = open("angles.txt","a")
+angles = open("/home/pi/Desktop/angles.txt","w")
 
 coordinates = []
 message = calculate.readline()
@@ -22,7 +22,7 @@ for i in range(0, int(coordinates[8])+1):
     message = calculate.readline()
     if message == '':
         break
-    currentLine = message.split("i,")
+    currentLine = message.split(",")
     x = float(currentLine[0])
     y = float(currentLine[1])
     tempX = x - previousX
@@ -34,6 +34,8 @@ for i in range(0, int(coordinates[8])+1):
             angle = -90
     else:
         angle = math.degrees(math.atan2(tempY,tempX))
+        if(angle<0):
+            angle = angle + 360
     angles.write(str(angle) + '\n')
     previousX = x
     previousY = y

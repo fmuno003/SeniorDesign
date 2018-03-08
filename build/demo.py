@@ -40,6 +40,16 @@ GPIO.setup(EnableM2, GPIO.OUT)
 GPIO.setup(EnableM3, GPIO.OUT)
 GPIO.setup(EnableM4, GPIO.OUT)
 
+def TurnAngles():
+    turning = open("/home/pi/Desktop/angles.txt","r")
+    a = []
+    data = turning.readline()
+    while data != "":
+        a.append(float(data))
+        data = turning.readline()
+        print(a)
+    return a
+
 def motorTesting():
     motorSelfTest.Forward(1,100,75)
     motorSelfTest.Stop(0.1)
@@ -58,7 +68,7 @@ def GPSdata():
     while(time.time() - start_time < 1.5 ):
         data = ser.readline()
         x = data.split(',')
-        if x[0] == "$GPGGA" or x[0] == "$GPRMC":
+        if x[0] == "$GPRMC":
             location = pynmea2.parse(data)
     ser.close()
     return location.latitude, location.longitude
@@ -71,7 +81,7 @@ def TurretRotation(lat, lon):
     x = lat - ORIGIN_LATITUDE
     y = lon - ORIGIN_LONGITUDE
     angle = math.degrees(math.atan2(y,x)) + 270
-    txtfile = open("home/pi/Desktop/build/Platform/angles.txt","w")
+    txtfile = open("/home/pi/Desktop/build/Platform/angles.txt","w")
     txtfile.write(str(angle))
     txtfile.close()
     # write to text file for platform rotation 
@@ -88,41 +98,108 @@ def stripString(string):
     longitude = float(tempData[1])
     return latitude, longitude
 
+# Sets inital for IMU
+def CalibrateIMU():
+    os.system("python /home/pi/Desktop/build/imu.py")
+    readValue = open("/home/pi/Desktop/build/imu.txt","r")
+    read_ser = readValue.readline()
+    if read_ser == ' ':
+        read_ser = readValue.readline()
+    Offset = 0.0 - float(read_ser)
+    print(Offset)
+    return Offset
+
+def IMU(Offset):
+    os.system("python /home/pi/Desktop/build/imu.py")
+    readValue = open("/home/pi/Desktop/build/imu.txt","r")
+    IMUValue = readValue.readline()
+    while IMUValue == ' ' or IMUValue == '':
+        IMUValue = readValue.readline()
+    IMUValue = float(IMUValue)
+    IMUValue = IMUValue + Offset
+    print(IMUValue)
+    if IMUValue < 0.0: 
+        IMUValue = IMUValue + 360.0
+    elif IMUValue > 360.0:
+        IMUValue = IMUValue - 360.0
+    return IMUValue
+
+#Parameter: Flag
+def Turning(flag, Offset, a):
+    CurrentAngle = IMU(Offset)
+    calcAngle = CurrentAngle + a
+    if flag == 1:
+        while IMU(Offset) < calcAngle:
+            print(IMU(Offset))
+            motorSelfTest.RightTurn(1.5)
+    elif flag == 2:
+        while IMU(Offset) > calcAngle:
+            print(IMU(Offset))
+            motorSelfTest.LeftTurn(1.5)
+    motorSelfTest.Stop(0.25)
+    
+#Parameter: Flag
+def returnTurn(flag, Offset):
+    if flag == 1:
+        while (IMU(Offset) > 0) or (IMU(Offset) < 360):
+            motorSelfTest.LeftTurn(1.5)
+    elif flag == 2:
+        while (IMU(Offset) > 0) or (IMU(Offset) < 360):
+            motorSelfTest.RightTurn(1.5)
+    motorSelfTest.Stop(0.25)
+    
+#===== Main =====
+
+#GUI CODE
+os.system('python /home/pi/Desktop/GUI/gui.py')
+os.system('python /home/pi/Desktop/RandNum.py')
+os.system('python /home/pi/Desktop/angles.py')
+
+motorTesting()
+
 #inputs for Forward() and Backward() are (timeSleep,dutyCycle,freq)
 f = open('/home/pi/Desktop/angles.txt','r')
 g = open('/home/pi/Desktop/Coordinates.txt', 'r')
 points = g.readline()
 latitude, longitude = stripString(points)
 flag = 0
+anglesArray = []
+i = 0
+#===== Loop =====
 while True:
+
+    #== Reads in locations ==
     message = f.readline()
     points = g.readline()
     if message == '' or points == '':
         break
     currentLine = float(message)
+    
     desLat, desLong = stripString(points)
     if currentLine > 0.0:
-        motorSelfTest.RightTurn(1.5)
         flag = 1
     elif currentLine < 0.0:
-        motorSelfTest.LeftTurn(1.5)
         flag = 2
-    motorSelfTest.Stop(0.25)
+    Offset = CalibrateIMU()
+    #==== Angles =====
+    anglesArray = TurnAngles()
+    #==== Turning ====
+    Turning(flag, Offset, anglesArray[i])
+    #==== Forward Movement ====
     lat, lon = GPSdata()
     distance = distanceFormula(lat, lon, desLat, desLong)
     while (distance >= 0.05):
-        motorSelfTest.Forward(1,100,100)
+        motorSelfTest.Forward(0.1,100,100)
         lat, lon = GPSdata()
         distance = distanceFormula(lat, lon, desLat,desLong)
         print distance
-    motorSelfTest.Stop(0.25)
+    motorSelfTest.Stop(0.1)
     if flag == 1:
-        pass
         motorSelfTest.LeftTurn(1.5)
     elif flag == 2:
-        pass
         motorSelfTest.RightTurn(1.5)
-    flag = 0
+    
+    #===== Turret Code =====
     TurretRotation(lat, lon)
     os.system('python /home/pi/Desktop/build/Platform/platformCCW.py')
     os.system('python /home/pi/Desktop/build/Platform/armUp.py')
@@ -135,9 +212,14 @@ while True:
         if data == 1:
             print "Hit"
             break
-
-    os.python('python /home/pi/Desktop/build/Platform/armDown.py')
+    os.system('python /home/pi/Desktop/build/Platform/armDown.py')
     os.system('python /home/pi/Desktop/build/Platform/platformCW.py')
+    
+    #===== Turning ======
+    returnTurning(flag, Offset)
+    flag = 0
+    Offset = 0
+    i = i + 1
 
 f.close()
 g.close()

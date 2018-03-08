@@ -1,22 +1,22 @@
-Example boundaries of Parking Lot 24 located at UCR.
+Example boundaries of Chung Loading Dock located at UCR.
 
-Dimensions of Parking Lot
-Width (East to West): 230'
-Length (North to South): 525'
+Dimensions of Loading Dock
+Width (East to West): '
+Length (North to South): '
 
 -----------------------------------
-
-South East Corner
-Lat: 33.977261 Long: -117.330202
+North West Corner
+Lat: 33.975492 Long: -117.325558
 
 South West Corner (Base Point)
-Lat: 33.977282 Long: -117.330928
-
-North West Corner
-Lat: 33.978701 Long: -117.330937
+Lat: 33.975365 Long: -117.325557
 
 North East Corner
-Lat: 33.978713 Long: -117.330247
+Lat: 33.975492 Long: -117.325410
+
+South East Corner
+Lat: 33.975367 Long: -117.325407
+
 
 -----------------------------------
 

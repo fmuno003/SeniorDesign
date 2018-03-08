@@ -4,7 +4,7 @@ import time
 random.seed(time.time())
 
 randomInput = open("/home/pi/Desktop/GUI/examples.txt", "r")
-lat = open("Coordinates.txt", "a")
+lat = open("/home/pi/Desktop/Coordinates.txt", "w")
 coordinates = []
 
 while True:
