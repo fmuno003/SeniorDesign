@@ -1,6 +1,4 @@
-# SeniorDesign
-
-## Autonomous Target Robot
+# Autonomous Target Robot
 
 ## Contributors
 Taylor Che
@@ -35,6 +33,7 @@ C
 
 ## Environments
 Raspbian GNU/Linux 9
+
 Arduino Uno IDE
 
 ## Manual
