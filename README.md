@@ -12,7 +12,7 @@ Francisco Munoz: https://www.linkedin.com/in/francisco-munoz
 * Autnomous GPS Navigation
 * Implementation of Kalman Filter
 * Targeting System
-* Serial Communication (Raspberry Pi/ Arduino Uno
+* Serial Communication (Raspberry Pi/ Arduino Uno)
 
 ## Parts List
 * 1 - Raspberry Pi 3 Model B
