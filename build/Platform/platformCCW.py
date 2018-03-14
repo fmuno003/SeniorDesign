@@ -16,16 +16,13 @@ def stepCoordinates():
     #degreeTan = math.degrees(math.tan(radTan))
     #print degreeTan
 
-    angles = open("angles.txt","r")
+    angles = open("/home/pi/Desktop/build/Platform/angles.txt","r")
     steps = angles.readline()
-    steps = float(steps)
-    steps = steps / 7.4
-    steps = math.ceil(steps)
-    print steps
+    steps = int(steps)
     return steps
 
 delay = 0.01
-steps = 20
+steps = stepCoordinates()
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setwarnings(False)
@@ -62,5 +59,3 @@ for i in range(0, int(steps)):
     time.sleep(delay)
     setStep(1,0,0,1)
     time.sleep(delay)
-    counter = counter + 1.8
-    print counter

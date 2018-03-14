@@ -1,18 +1,28 @@
 import serial
+from time import sleep
 
-ser = serial.Serial('/dev/ttyACM0',9600)
-imu = open('/home/pi/Desktop/build/imu.txt','w')
+print ("starting")
+ser = serial.Serial('/dev/ttyACM0', baudrate=9600)
+ser.flush()
 read_serial = ser.readline()
 read_2 = ser.readline()
+
+print ("start reading")
+if read_serial == None:
+    read_serial = ser.readline()
+if read_2 == None:
+    read_2 = ser.readline()
+
 print (read_serial)
 print (read_2)
-if read_2 == ' ':
-    read_2 = ser.readline()
-if read_serial == ' ':
-    read_serial = ser.readline()
 
+imu = open('/home/pi/Desktop/build/imu.txt','w')
 if (read_serial) != (read_2):
-    print(read_2)
-    imu.write(read_2)
+    print("sending this: " + str(read_2))
+    imu.write(str(read_2))
 else:
-    imu.write(read_2)
+    print("sending this: " + str(read_serial))
+    imu.write(str(read_serial))
+imu.close()
+
+ser.close()

@@ -103,7 +103,6 @@ def CalibrateIMU(readValue):
     #while read_ser == None  or read_ser == ' ':
     flushIMU(readValue)
     read_ser = readValue.readline()
-    
     Offset = 0.0 - float(read_ser)
     print("Offset" + str(Offset))
     return Offset
@@ -111,8 +110,8 @@ def CalibrateIMU(readValue):
 def IMU(Offset,readValue):
 #    os.system("python /home/pi/Desktop/build/imu.py")
 #    readValue = open("/home/pi/Desktop/build/imu.txt","r")
-    read_ser = readValue.readline()
-    read_ser = float(read_ser) + float(Offset)
+    read_serial = readValue.readline()
+    read_ser = float(read_serial) + float(Offset)
     if read_ser < 0.0: 
         read_ser = read_ser + 360.0
     elif read_ser > 360.0:
@@ -122,45 +121,54 @@ def IMU(Offset,readValue):
 def Turning(flag, Offset, a, readValue):
     calcAngle = a
 
-    if calcAngle < 0.0: 
+    if calcAngle < 0.0:
         calcAngle = calcAngle + 360.0
     elif calcAngle > 360.0:
         calcAngle = calcAngle - 360.0
 
     print("Turning now:")
     print("Target Angle" + str(calcAngle))
-
+    
 
     if flag == 1:
-        angle = IMU(Offset,readValue)
+        angle=IMU(Offset,readValue)
         motorSelfTest.RightTurn()
         while angle < calcAngle:
-            print("Current angle " + str(angle))
+            print("Current angle ")
             #Loops until angle is achieved
             angle = IMU(Offset,readValue)
         motorSelfTest.Stop()
         
     elif flag == 2:
-        angle = IMU(Offset,readValue)
+        angle=IMU(Offset,readValue)
         motorSelfTest.LeftTurn()
         while angle > calcAngle:
-            print("Current angle " + str(angle))
+            print("Current angle ")
             #Loops until angle is achieved
-            angle = IMU(Offset,readValue) 
+            angle = IMU(Offset,readValue)
         motorSelfTest.Stop()
     motorSelfTest.Stop()
+    return
+
 #Parameter: Flag
 def returnTurn(flag, Offset,readValue):
-    angle = IMU(Offset,readValue)
     if flag == 1:
-        while (angle > 10) or (angle < 350):
+        angle = IMU(Offset,readValue)
+        while (angle > 10):
             motorSelfTest.LeftTurn()
+            print(angle)
+            angle = IMU(Offset,readValue)
+        motorSelfTest.Stop()
     elif flag == 2:
-        while (angle > 10) or (angle < 350):
+        angle = IMU(Offset,readValue)
+        while (angle < 350):
             motorSelfTest.RightTurn()
+            print(angle)
+            angle = IMU(Offset,readValue)
+        motorSelfTest.Stop()
     motorSelfTest.Stop()
-
-
+    return
+    
 def calculateBounds():
     fp = open("/home/pi/Desktop/GUI/examples.txt","r")
     for i, line in enumerate(fp):
@@ -188,11 +196,12 @@ def checkBounds(lat,lon, leftLat, rightLat, upLong, lowLong):
 def flushIMU(readValue):
     #Flushes Serial Ports
     i=0
-    while i<3:
+    while i<10:
         test = readValue.readline()
         i=i+1
         print test
     return
+
 
 #===== Main =====
 LEFT_LAT, RIGHT_LAT, UP_LONG, LOW_LONG = calculateBounds()
@@ -204,13 +213,11 @@ os.system('python /home/pi/Desktop/angles.py')
 
 readValue = serial.Serial('/dev/ttyACM0', baudrate=9600)
 
-#Flushes Serial Ports
 i=0
-while i<15:
+while i<10:
     test = readValue.readline()
     i=i+1
-    print test
-
+print test
 print("Flushed IMU")
 
 motorTesting()
@@ -247,64 +254,14 @@ while True:
     #==== Turning ====
     print(anglesArray[i])
     Turning(flag, Offset, anglesArray[i], readValue)
-    #==== Forward Movement ====
-    lat, lon = GPSdata()
-    distance = distanceFormula(lat, lon, desLat, desLong)
-    
-    #Motor Activates for 10 Seconds
-    motorSelfTest.Forward(100,100)
-    while (distance >= 0.05):
-        lat, lon = GPSdata()
-        boundary = checkBounds(lat, lon, LEFT_LAT, RIGHT_LAT, UP_LONG, LOW_LONG)
-        if boundary == 1:
-           print("Out of Bounds")
-            # sys.exit()
-        if lat > desLat and flag==1:
-            motorSelfTest.Stop()
-            Turning(flag, Offset, 90, readValue)
-            lat, lon = GPSdata()
-            distance = distanceFormula(lat,lon,desLat,desLong)
-            motorSelfTest.Forward(random.randint(25,100),100)
-        elif lat < destLat and flag==2:
-            motorSelfTest.Stop()
-            Turning(flag, Offset, 270, readValue)
-            lat, lon = GPSdata()
-            distance = distanceFormula(lat,lon,desLat,desLong)
-            motorSelfTest.Forward(random.randint(25,100),100)
-        distance = distanceFormula(lat, lon, desLat, desLong)
-        print distance
-    motorSelfTest.Stop()
-    if flag == 1:
-        motorSelfTest.LeftTurn()
-    elif flag == 2:
-        motorSelfTest.RightTurn()
+    time.sleep(1)
+    #==== Return Turn ====
+    returnTurn(flag, Offset,readValue)
 
-    #===== Turn to North =====
-    returnTurning(flag, Offset, readValue)
-    
-    #===== Turret Code =====
-    # Fix turret calculation 
-    TurretRotation(lat, lon)
-    os.system('python /home/pi/Desktop/build/Platform/platformCCW.py')
-    # Arm Up works fine, no need to touch it
-    os.system('python /home/pi/Desktop/build/Platform/armUp.py')
-    start_time = time.time()
-    while time.time() - start_time <= 4:
-        os.system('python /home/pi/Desktop/build/Platform/vibration.py')
-        vibration = open("/home/pi/Desktop/build/Platform/vibration.txt","r")
-        data = vibration.readline()
-        data = int(data)
-        if data == 1:
-            print "Hit"
-            break
-    # Arm Down works fine, no need to touch it
-    os.system('python /home/pi/Desktop/build/Platform/armDown.py')
-    os.system('python /home/pi/Desktop/build/Platform/platformCW.py')
-    
-    #===== Turning ======
     flag = 0
     Offset = 0
     i = i + 1
 
 f.close()
 g.close()
+

@@ -1,6 +1,9 @@
 import RPi.GPIO as GPIO
+import random
 import time
 import sys
+
+random.seed(time.time())
 
 GPIO.setwarnings(False)
 
@@ -57,7 +60,7 @@ GPIO.setup(EnableM4, GPIO.OUT)
 
 
 # Move Forward
-def Forward(dutyCycle,freq):
+def Forward(timeSleep,dutyCycle,freq):
     GPIO.output(EnableM1, GPIO.HIGH)
     GPIO.output(EnableM2, GPIO.HIGH)
     GPIO.output(EnableM3, GPIO.HIGH)
@@ -75,9 +78,10 @@ def Forward(dutyCycle,freq):
     pwm_forwardM3.start(dutyCycle)
     pwm_forwardM4.start(dutyCycle)
     #print "Moving Forward"
+    time.sleep(timeSleep)
 
 # Move Backward
-def Backward(dutyCycle,freq):
+def Backward(timeSleep,dutyCycle,freq):
     GPIO.output(EnableM1, GPIO.HIGH)
     GPIO.output(EnableM2, GPIO.HIGH)
     GPIO.output(EnableM3, GPIO.HIGH)
@@ -95,9 +99,9 @@ def Backward(dutyCycle,freq):
     pwm_backwardM3.start(dutyCycle)
     pwm_backwardM4.start(dutyCycle)
     #print "Moving Backward"
-
+    time.sleep(timeSleep)
 # Right Turn
-def RightTurn():
+def RightTurn(timeSleep):
     GPIO.output(EnableM1, GPIO.HIGH)
     GPIO.output(EnableM2, GPIO.HIGH)
     GPIO.output(EnableM3, GPIO.HIGH)
@@ -115,9 +119,9 @@ def RightTurn():
     pwm_forwardM3.start(100)
     pwm_forwardM4.start(50)'''
     #print "Turning Right"
-
+    time.sleep(timeSleep)
 # Left Turn
-def LeftTurn():
+def LeftTurn(timeSleep):
     GPIO.output(EnableM1, GPIO.HIGH)
     GPIO.output(EnableM2, GPIO.HIGH)
     GPIO.output(EnableM3, GPIO.HIGH)
@@ -135,9 +139,9 @@ def LeftTurn():
     pwm_forwardM3.start(50)
     pwm_forwardM4.start(100)'''  
     #print "Turning Left"
-
+    time.sleep(timeSleep)
 # Stop
-def Stop():
+def Stop(timeSleep):
     GPIO.output(EnableM1, GPIO.LOW)
     GPIO.output(EnableM2, GPIO.LOW)
     GPIO.output(EnableM3, GPIO.LOW)
@@ -150,3 +154,4 @@ def Stop():
     GPIO.output(motor_2_Backward, GPIO.LOW)
     GPIO.output(motor_3_Backward, GPIO.LOW)
     GPIO.output(motor_4_Backward, GPIO.LOW)
+    time.sleep(timeSleep)

@@ -1,0 +1,61 @@
+PASTE TO /GUI/example.txt
+
+33.975492
+-117.325558
+33.975365
+-117.325557
+33.975492
+-117.325410
+33.975367
+-117.325407
+2
+
+
+
+Example boundaries of Chung Loading Dock located at UCR.
+
+Dimensions of Loading Dock
+Width (East to West): '
+Length (North to South): '
+
+-----------------------------------
+North West Corner
+Lat: 33.975492 Long: -117.325558
+
+South West Corner (Base Point)
+Lat: 33.975365 Long: -117.325557
+
+North East Corner
+Lat: 33.975492 Long: -117.325410
+
+South East Corner
+Lat: 33.975367 Long: -117.325407
+
+
+-----------------------------------
+
+Width coordinates are separated by 0.000726
+From this we can calculate that 0.0001 in Longitutde is equal to approximately 31.68ft.
+ 
+Length coordinates are separated by 0.001419
+From this we can calculate that 0.001 in Latitude is equal to approximately 369.98ft.
+
+
+
+If we treat base point as (0,0) and make the corners plotted points, the locations of these points are as follows.
+
+-----------------------------------
+
+South East Corner: (12,0)
+
+South West Corner: (0,0)
+
+North West Corner: (0,26)
+
+North East Corner: (12,26)
+
+-----------------------------------
+
+These points are located on a cartiesian plane where one unit is equal to 10 ft. (i.e 11.5  = 115 ft)
+
+

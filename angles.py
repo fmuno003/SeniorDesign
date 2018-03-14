@@ -17,7 +17,6 @@ while True:
         coordinates.append(google)
         pass
 
-
 for i in range(0, int(coordinates[8])+1):
     message = calculate.readline()
     if message == '':
@@ -37,6 +36,7 @@ for i in range(0, int(coordinates[8])+1):
         if(angle<0):
             angle = angle + 360
     angles.write(str(angle) + '\n')
+    print angle
     previousX = x
     previousY = y
 
