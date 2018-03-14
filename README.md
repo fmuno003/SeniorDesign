@@ -1,11 +1,11 @@
 # Autonomous Target Robot
 
 ## Contributors
-Taylor Che: [LinkedIn](www.linkedin.com/in/taylor-che-655718117)
+Taylor Che: www.linkedin.com/in/taylor-che-655718117
  
-Samuel Choi: [LinkedIn](https://www.linkedin.com/in/samuelkihongchoi)
+Samuel Choi: https://www.linkedin.com/in/samuelkihongchoi
 
-Francisco Munoz: [LinkedIn](https://www.linkedin.com/in/francisco-munoz)
+Francisco Munoz: https://www.linkedin.com/in/francisco-munoz
 
 ## Objectives
 * GPS Boundary and Destination Mapping
