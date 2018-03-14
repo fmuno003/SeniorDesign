@@ -28,7 +28,8 @@ Francisco Munoz
 * 1 - SW-420 Vibration Sensor
 
 ## Coding Languages
-Python 2.7
+Python 2.7.13
+
 C
 
 ## Environments
