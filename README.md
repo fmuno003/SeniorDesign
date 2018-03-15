@@ -28,7 +28,7 @@ Francisco Munoz: https://www.linkedin.com/in/francisco-munoz
 * 1 - 7.4 Nickel-metal Hydride (NiMH) Battery
 * 2 - NEMA-17 Stepper Motor
 * 1 - Adafruit TB6612 Motor Driver
-* 1 - Buck converter
+* 1 - SMAKN DC/DC Converter 12V Step Down  to 5V/3A Power Supply Module
 * 1 - SW-420 Vibration Sensor
 
 ## Coding Languages
