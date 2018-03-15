@@ -25,7 +25,7 @@ Francisco Munoz: https://www.linkedin.com/in/francisco-munoz
 * 1 - Adafruit BNO055 Absolute Orientation Sensor
 * 1 - BU-353-S4 USB GPS Receiver
 * 1 - 11.1V Lithium Polymer (LiPo) Battery
-* 1 - 7.4 Nickel-metal Hydride (NiMH) Battery
+* 1 - 7.2V Nickel-metal Hydride (NiMH) Battery
 * 2 - NEMA-17 Stepper Motor
 * 1 - Adafruit TB6612 Motor Driver
 * 1 - SMAKN DC/DC Converter 12V Step Down  to 5V/3A Power Supply Module
