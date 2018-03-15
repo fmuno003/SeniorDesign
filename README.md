@@ -13,7 +13,7 @@ Francisco Munoz: https://www.linkedin.com/in/francisco-munoz
 
 ## Objectives
 * GPS Boundary and Destination Mapping
-* Autnomous GPS Navigation
+* Autonomous GPS Navigation
 * Implementation of Kalman Filter
 * Targeting System
 * Serial Communication (Raspberry Pi/ Arduino Uno)
