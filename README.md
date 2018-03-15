@@ -42,12 +42,12 @@ Raspbian GNU/Linux 9
 Arduino Uno IDE
 
 ## Manual
-'''
+```
 git clone https://github.com/fmuno003/SeniorDesign
 cd SeniorDesign
 cd build
 python demo.py
-'''
+```
 
 ## Video 
 https://youtu.be/rq3PR1blC0o
