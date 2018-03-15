@@ -1,5 +1,9 @@
 # Autonomous Target Robot
 
+## Description
+The objective of our project is to design an autonomous robot which functions as a target for long range target practice. Our design will communicate with the base station via cellular network, from which we connect to from base station’s virtual network. The base station will provide the operational boundary for which we will pull random GPS destinations, for which the robot will navigate to whilst positioning itself in the environment. At each destination, we will activate our turret to face the origin location and raise the target, counting the number of hits on target upon returning to its origin location.
+
+
 ## Contributors
 Taylor Che: www.linkedin.com/in/taylor-che-655718117
  
@@ -38,3 +42,7 @@ Raspbian GNU/Linux 9
 Arduino Uno IDE
 
 ## Manual
+
+
+## Video 
+https://youtu.be/rq3PR1blC0o
