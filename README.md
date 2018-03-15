@@ -42,7 +42,9 @@ Raspbian GNU/Linux 9
 Arduino Uno IDE
 
 ## Manual
+'''
 
+'''
 
 ## Video 
 https://youtu.be/rq3PR1blC0o
