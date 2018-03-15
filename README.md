@@ -42,6 +42,9 @@ Raspbian GNU/Linux 9
 Arduino Uno IDE
 
 ## Manual
+When using this code, the directory before cloning must be /home/pi/Desktop/
+
+All the directories used in the python code are set to this default directory and allows everything to communicate smoothly
 ```
 git clone https://github.com/fmuno003/SeniorDesign
 cd SeniorDesign
