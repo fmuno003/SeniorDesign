@@ -43,7 +43,10 @@ Arduino Uno IDE
 
 ## Manual
 '''
-
+git clone https://github.com/fmuno003/SeniorDesign
+cd SeniorDesign
+cd build
+python demo.py
 '''
 
 ## Video 
